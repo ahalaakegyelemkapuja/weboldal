@@ -15,9 +15,8 @@ export default function About() {
             <img
               src="/images/roses.jpg"
               alt="Fehér rózsák"
-              className="relative w-full object-cover"
+              className="relative w-full aspect-square md:aspect-auto md:h-[520px] object-cover"
               style={{
-                height: '520px',
                 borderRadius: '2px',
                 filter: 'brightness(0.95) saturate(0.9)',
               }}

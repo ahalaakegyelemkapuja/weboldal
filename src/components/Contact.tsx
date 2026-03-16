@@ -99,7 +99,7 @@ export default function Contact() {
                       border: '1px solid var(--color-sage-light)',
                       color: 'var(--color-sage)',
                       borderRadius: '2px',
-                      fontSize: '1rem',
+                      fontSize: item.label === 'Telefon' ? '2rem' : '1rem',
                     }}
                   >
                     {item.icon}
@@ -280,7 +280,7 @@ export default function Contact() {
                   className="font-sans text-xs text-center"
                   style={{ color: 'var(--color-stone)', fontWeight: 300 }}
                 >
-                  Adatait bizalmasan kezelem
+                  Adatait bizalmasan kezelem.
                 </p>
               </form>
             )}

@@ -26,7 +26,7 @@ export default function Hero() {
           className="font-serif animate-fade-in-up mt-4"
           style={{
             fontSize: 'clamp(2.8rem, 7vw, 5.5rem)',
-            color: 'var(--color-hero-brown)',
+            color: 'var(--color-charcoal)',
             fontWeight: 300,
             lineHeight: 1.15,
             letterSpacing: '-0.01em',
@@ -45,7 +45,7 @@ export default function Hero() {
           className="font-sans animate-fade-in-up delay-400 mx-auto"
           style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            color: 'var(--color-hero-brown)',
+            color: 'var(--color-charcoal)',
             fontWeight: 300,
             maxWidth: '560px',
             lineHeight: 1.8,
@@ -56,7 +56,7 @@ export default function Hero() {
           emberközpontú szertartás keretében, ahol minden szó az Önök emlékeiből születik.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in-up delay-600" style={{ opacity: 0 }}>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-[90px] animate-fade-in-up delay-600" style={{ opacity: 0 }}>
           <a
             href="#kapcsolat"
             className="font-sans px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300"
@@ -77,7 +77,7 @@ export default function Hero() {
             className="font-sans px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300"
             style={{
               border: '1px solid var(--color-stone-light)',
-              color: 'var(--color-hero-brown)',
+              color: 'var(--color-charcoal)',
               letterSpacing: '0.12em',
               fontWeight: 400,
               borderRadius: '2px',
@@ -89,7 +89,7 @@ export default function Hero() {
             }}
             onMouseLeave={e => {
               e.currentTarget.style.borderColor = 'var(--color-stone-light)';
-              e.currentTarget.style.color = 'var(--color-hero-brown)';
+              e.currentTarget.style.color = 'var(--color-charcoal)';
             }}
           >
             Hogyan dolgozom

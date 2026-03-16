@@ -18,7 +18,7 @@ export default function Navbar() {
   ];
 
   const brandColor = scrolled ? 'var(--color-charcoal)' : 'white';
-  const subtitleColor = scrolled ? 'var(--color-stone)' : 'var(--color-hero-brown)';
+  const subtitleColor = scrolled ? 'var(--color-stone)' : 'var(--color-charcoal)';
   const navLinkColor = scrolled ? 'var(--color-stone-dark)' : 'white';
   const menuIconColor = scrolled ? 'var(--color-charcoal)' : 'white';
   const topTextShadow = scrolled ? 'none' : '0 1px 10px rgba(0, 0, 0, 0.18)';
