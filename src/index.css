@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf7f2;
+  --color-warm-white: #f5f0eb;
+  --color-sage: #8a9e8c;
+  --color-sage-light: #b5c8b7;
+  --color-sage-dark: #5c7a5e;
+  --color-stone: #9c9082;
+  --color-stone-light: #c8bfb4;
+  --color-stone-dark: #6b6057;
+  --color-dusty-rose: #c4a09a;
+  --color-dusty-rose-light: #e8d4d0;
+  --color-charcoal: #3a3530;
+  --color-charcoal-light: #5c5550;
+  --color-gold: #b8975a;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Jost', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.9s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+.animate-float {
+  animation: floatUp 6s ease-in-out infinite;
+}
+
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-800 { animation-delay: 0.8s; }
+
+.section-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+  margin: 0 auto;
+}
+
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 247, 242, 0.15) 0%,
+    rgba(250, 247, 242, 0.6) 60%,
+    rgba(250, 247, 242, 1) 100%
+  );
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(58, 53, 48, 0.08);
+}
+
+.ornament {
+  display: inline-block;
+  color: var(--color-gold);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0.7;
+}
