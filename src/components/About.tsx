@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section id="rolam" className="py-24 px-6" style={{ backgroundColor: 'var(--color-cream)' }}>
+    <section id="rolam" className="pt-6 pb-24 px-6" style={{ backgroundColor: 'var(--color-cream)' }}>
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Image side */}
@@ -41,7 +41,7 @@ export default function About() {
                   lineHeight: 1.6,
                 }}
               >
-                „Minden ember élete egy egyedi történet, amely megérdemli, hogy méltón elbeszéljük."
+                „A hála a kegyelem kapuja"
               </p>
               <p
                 className="font-sans mt-3 text-xs tracking-widest uppercase"
@@ -95,21 +95,21 @@ export default function About() {
               </p>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-8">
+            <div className="mt-10 grid grid-cols-3 gap-3 sm:gap-6">
               {[
                 { num: '12+', label: 'év tapasztalat' },
                 { num: '400+', label: 'szertartás' },
                 { num: '100%', label: 'személyre szabott' },
               ].map(stat => (
-                <div key={stat.label} className="text-center">
+                <div key={stat.label} className="text-center min-w-0">
                   <div
                     className="font-serif"
-                    style={{ fontSize: '2rem', color: 'var(--color-sage-dark)', fontWeight: 400 }}
+                    style={{ fontSize: '1.8rem', color: 'var(--color-sage-dark)', fontWeight: 400, lineHeight: 1.1 }}
                   >
                     {stat.num}
                   </div>
                   <div
-                    className="font-sans text-xs tracking-widest uppercase mt-1"
+                    className="font-sans text-[0.62rem] sm:text-xs tracking-[0.18em] uppercase mt-1"
                     style={{ color: 'var(--color-stone)' }}
                   >
                     {stat.label}

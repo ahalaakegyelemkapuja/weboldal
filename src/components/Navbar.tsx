@@ -17,6 +17,12 @@ export default function Navbar() {
     { href: '#kapcsolat', label: 'Kapcsolat' },
   ];
 
+  const brandColor = scrolled ? 'var(--color-charcoal)' : 'white';
+  const subtitleColor = scrolled ? 'var(--color-stone)' : 'var(--color-hero-brown)';
+  const navLinkColor = scrolled ? 'var(--color-stone-dark)' : 'white';
+  const menuIconColor = scrolled ? 'var(--color-charcoal)' : 'white';
+  const topTextShadow = scrolled ? 'none' : '0 1px 10px rgba(0, 0, 0, 0.18)';
+
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
@@ -31,13 +37,13 @@ export default function Navbar() {
         <a href="#" className="flex flex-col leading-none">
           <span
             className="font-serif text-xl"
-            style={{ color: 'var(--color-charcoal)', fontWeight: 400, letterSpacing: '0.02em' }}
+            style={{ color: brandColor, fontWeight: 400, letterSpacing: '0.02em', textShadow: topTextShadow }}
           >
             Kovács Anikó
           </span>
           <span
             className="font-sans text-xs tracking-widest uppercase"
-            style={{ color: 'var(--color-stone)', fontWeight: 300 }}
+            style={{ color: subtitleColor, fontWeight: 300, textShadow: topTextShadow }}
           >
             Polgári Búcsúztató
           </span>
@@ -50,9 +56,9 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className="font-sans text-sm tracking-wide transition-colors duration-200"
-              style={{ color: 'var(--color-stone-dark)', fontWeight: 300 }}
+              style={{ color: navLinkColor, fontWeight: 300, textShadow: topTextShadow }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-stone-dark)')}
+              onMouseLeave={e => (e.currentTarget.style.color = navLinkColor)}
             >
               {link.label}
             </a>
@@ -83,21 +89,21 @@ export default function Navbar() {
           <span
             className="block w-6 h-px transition-all duration-300"
             style={{
-              backgroundColor: 'var(--color-charcoal)',
+              backgroundColor: menuIconColor,
               transform: menuOpen ? 'rotate(45deg) translateY(4px)' : 'none',
             }}
           />
           <span
             className="block w-6 h-px transition-all duration-300"
             style={{
-              backgroundColor: 'var(--color-charcoal)',
+              backgroundColor: menuIconColor,
               opacity: menuOpen ? 0 : 1,
             }}
           />
           <span
             className="block w-6 h-px transition-all duration-300"
             style={{
-              backgroundColor: 'var(--color-charcoal)',
+              backgroundColor: menuIconColor,
               transform: menuOpen ? 'rotate(-45deg) translateY(-4px)' : 'none',
             }}
           />

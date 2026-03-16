@@ -1,6 +1,9 @@
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      className="relative flex items-center justify-center overflow-hidden"
+      style={{ minHeight: 'calc(100svh - 88px)' }}
+    >
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -23,7 +26,7 @@ export default function Hero() {
           className="font-serif animate-fade-in-up mt-4"
           style={{
             fontSize: 'clamp(2.8rem, 7vw, 5.5rem)',
-            color: 'var(--color-charcoal)',
+            color: 'var(--color-hero-brown)',
             fontWeight: 300,
             lineHeight: 1.15,
             letterSpacing: '-0.01em',
@@ -33,7 +36,7 @@ export default function Hero() {
         >
           Méltóságteljes búcsú,
           <br />
-          <em style={{ fontStyle: 'italic', color: 'var(--color-sage-dark)' }}>személyre szabva</em>
+          <em style={{ fontStyle: 'italic', color: 'white' }}>személyre szabva</em>
         </h1>
 
         <div className="section-divider mt-8 mb-8 animate-fade-in-up delay-400" style={{ opacity: 0 }} />
@@ -42,7 +45,7 @@ export default function Hero() {
           className="font-sans animate-fade-in-up delay-400 mx-auto"
           style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            color: 'var(--color-stone-dark)',
+            color: 'var(--color-hero-brown)',
             fontWeight: 300,
             maxWidth: '560px',
             lineHeight: 1.8,
@@ -74,7 +77,7 @@ export default function Hero() {
             className="font-sans px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300"
             style={{
               border: '1px solid var(--color-stone-light)',
-              color: 'var(--color-charcoal)',
+              color: 'var(--color-hero-brown)',
               letterSpacing: '0.12em',
               fontWeight: 400,
               borderRadius: '2px',
@@ -86,22 +89,13 @@ export default function Hero() {
             }}
             onMouseLeave={e => {
               e.currentTarget.style.borderColor = 'var(--color-stone-light)';
-              e.currentTarget.style.color = 'var(--color-charcoal)';
+              e.currentTarget.style.color = 'var(--color-hero-brown)';
             }}
           >
             Hogyan dolgozom
           </a>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="mt-16 animate-float" style={{ opacity: 0.6 }}>
-          <div
-            className="mx-auto w-px h-12"
-            style={{
-              background: 'linear-gradient(to bottom, var(--color-gold), transparent)',
-            }}
-          />
-        </div>
       </div>
     </section>
   );

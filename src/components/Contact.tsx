@@ -131,21 +131,6 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Candle image */}
-            <div className="mt-10 relative overflow-hidden" style={{ borderRadius: '2px', height: '200px' }}>
-              <img
-                src="/images/candle.jpg"
-                alt="Gyertya"
-                className="w-full h-full object-cover"
-                style={{ filter: 'brightness(0.8) saturate(0.7)' }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(to right, rgba(250,247,242,0.3), transparent)',
-                }}
-              />
-            </div>
           </div>
 
           {/* Right: Form */}
@@ -295,7 +280,7 @@ export default function Contact() {
                   className="font-sans text-xs text-center"
                   style={{ color: 'var(--color-stone)', fontWeight: 300 }}
                 >
-                  Adatait bizalmasan kezelem, harmadik félnek nem adom át.
+                  Adatait bizalmasan kezelem
                 </p>
               </form>
             )}
