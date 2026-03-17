@@ -123,7 +123,7 @@ export default function Services() {
           />
           <div
             className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-            style={{ backgroundColor: 'rgba(58, 53, 48, 0.35)' }}
+            style={{ backgroundColor: 'transparent' }}
           >
             <p
               className="font-serif"

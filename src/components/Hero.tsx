@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="hero-overlay absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '50px' }}>
         <div className="animate-fade-in">
           <span className="ornament">✦</span>
         </div>
@@ -26,7 +26,7 @@ export default function Hero() {
           className="font-serif animate-fade-in-up mt-4"
           style={{
             fontSize: 'clamp(2.45rem, 6.3vw, 5.2rem)',
-            color: 'white',
+            color: '#312a28',
             fontWeight: 300,
             lineHeight: 1.15,
             letterSpacing: '-0.01em',
@@ -39,16 +39,19 @@ export default function Hero() {
           <em style={{ fontStyle: 'italic', color: 'white' }}>személyre szabva</em>
         </h1>
 
-        <div className="section-divider mt-8 mb-8 animate-fade-in-up delay-400" style={{ opacity: 0 }} />
+        <div
+          className="section-divider mt-8 mb-8 animate-fade-in-up delay-400"
+          style={{ opacity: 0, marginTop: '57px', marginBottom: '7px' }}
+        />
 
         <p
           className="font-sans animate-fade-in-up delay-400 mx-auto"
           style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            color: 'white',
+            color: '#312a28',
             fontWeight: 300,
             maxWidth: '560px',
-            marginTop: '50px',
+            marginTop: '0px',
             lineHeight: 1.8,
             opacity: 0,
           }}
@@ -57,7 +60,7 @@ export default function Hero() {
           emberközpontú szertartás keretében, ahol minden szó az Önök emlékeiből születik.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-[90px] animate-fade-in-up delay-600" style={{ opacity: 0 }}>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-[40px] animate-fade-in-up delay-600" style={{ opacity: 0 }}>
           <a
             href="#kapcsolat"
             className="font-sans px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300"
