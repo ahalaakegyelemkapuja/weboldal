@@ -43,7 +43,7 @@ export default function Navbar() {
           </span>
           <span
             className="font-sans tracking-widest uppercase"
-            style={{ color: subtitleColor, fontWeight: 300, textShadow: topTextShadow, fontSize: '0.47rem', letterSpacing: '0.20em' }}
+            style={{ color: subtitleColor, fontWeight: 300, textShadow: topTextShadow, fontSize: '0.53rem', letterSpacing: '0.20em' }}
           >
             Polgári Búcsúztató
           </span>
