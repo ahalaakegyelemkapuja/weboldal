@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="hero-overlay absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '80px' }}>
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '110px' }}>
         <div className="animate-fade-in">
           <span className="ornament">✦</span>
         </div>
@@ -25,7 +25,7 @@ export default function Hero() {
         <h1
           className="font-serif animate-fade-in-up mt-4"
           style={{
-            fontSize: 'clamp(2.45rem, 6.3vw, 5.2rem)',
+            fontSize: 'clamp(2.45rem, 6vw, 5.2rem)',
             color: '#312a28',
             fontWeight: 300,
             lineHeight: 1.15,
@@ -41,7 +41,7 @@ export default function Hero() {
 
         <div
           className="section-divider mt-8 mb-8 animate-fade-in-up delay-400"
-          style={{ opacity: 0, marginTop: '37px', marginBottom: '7px' }}
+          style={{ opacity: 0, marginTop: '22px', marginBottom: '7px' }}
         />
 
         <p

@@ -31,7 +31,7 @@ export default function Services() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" style={{ marginTop: '-40px' }}>
           <p
             className="font-sans text-xs tracking-widest uppercase mb-4"
             style={{ color: 'var(--color-sage)' }}
