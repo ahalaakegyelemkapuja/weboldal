@@ -53,12 +53,12 @@ export default function Process() {
                 color: 'var(--color-charcoal)',
                 fontWeight: 300,
                 lineHeight: 1.2,
-                transform: 'translateY(-20px)',
+                transform: 'translateY(-10px)',
               }}
             >
               Hogyan dolgozom
             </h2>
-            <div className="section-divider mb-6" style={{ marginTop: '4px' }} />
+            <div className="section-divider mb-6" style={{ marginTop: '-6px' }} />
           </div>
           <p
             className="font-sans mx-auto"
