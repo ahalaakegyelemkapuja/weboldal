@@ -45,7 +45,7 @@ export default function Process() {
           >
             A folyamat
           </p>
-          <div style={{ transform: 'translateY(-10px)' }}>
+          <div>
             <h2
               className="font-serif"
               style={{
@@ -53,6 +53,7 @@ export default function Process() {
                 color: 'var(--color-charcoal)',
                 fontWeight: 300,
                 lineHeight: 1.2,
+                transform: 'translateY(-20px)',
               }}
             >
               Hogyan dolgozom

@@ -45,12 +45,12 @@ export default function Services() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
-              transform: 'translateY(-20px)',
+              transform: 'translateY(-10px)',
             }}
           >
             Miben segíthetek
           </h2>
-          <div className="section-divider mt-6 mb-6" />
+          <div className="section-divider mt-6 mb-6" style={{ transform: 'translateY(10px)' }} />
         </div>
 
         {/* Service cards */}
@@ -110,9 +110,7 @@ export default function Services() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
-
   );
 }
