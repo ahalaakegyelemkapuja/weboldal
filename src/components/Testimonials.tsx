@@ -27,7 +27,7 @@ export default function Testimonials() {
         <div className="text-center mb-16">
           <p
             className="font-sans text-xs tracking-widest uppercase mb-4"
-            style={{ color: 'var(--color-sage)' }}
+            style={{ color: 'var(--color-sage)', transform: 'translateY(-30px)' }}
           >
             Visszajelzések
           </p>
@@ -38,12 +38,12 @@ export default function Testimonials() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
-              transform: 'translateY(-10px)',
+              transform: 'translateY(-20px)',
             }}
           >
             Amit a családok mondanak
           </h2>
-          <div className="section-divider mt-6" />
+          <div className="section-divider mt-6" style={{ transform: 'translateY(10px)' }} />
         </div>
 
         {/* Testimonial cards */}

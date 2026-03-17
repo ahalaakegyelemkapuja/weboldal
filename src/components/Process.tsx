@@ -58,7 +58,7 @@ export default function Process() {
             >
               Hogyan dolgozom
             </h2>
-            <div className="section-divider mb-6" style={{ marginTop: '-6px' }} />
+            <div className="section-divider mb-6" style={{ marginTop: '-1px' }} />
           </div>
           <p
             className="font-sans mx-auto"
@@ -67,6 +67,7 @@ export default function Process() {
               fontWeight: 300,
               maxWidth: '520px',
               lineHeight: 1.8,
+              transform: 'translateY(20px)',
             }}
           >
             A folyamat minden lépése az Önök kényelmét és a szeretett személy méltó búcsúját szolgálja.
