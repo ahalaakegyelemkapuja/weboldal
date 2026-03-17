@@ -42,8 +42,8 @@ export default function Navbar() {
             Kovács Anikó
           </span>
           <span
-            className="font-sans text-xs tracking-widest uppercase"
-            style={{ color: subtitleColor, fontWeight: 300, textShadow: topTextShadow }}
+            className="font-sans tracking-widest uppercase"
+            style={{ color: subtitleColor, fontWeight: 300, textShadow: topTextShadow, fontSize: '0.62rem', letterSpacing: '0.24em' }}
           >
             Polgári Búcsúztató
           </span>

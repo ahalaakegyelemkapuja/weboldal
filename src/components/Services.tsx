@@ -110,38 +110,8 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Nature image banner */}
-        <div
-          className="mt-16 relative overflow-hidden h-[140px] md:h-[280px]"
-          style={{ borderRadius: '2px' }}
-        >
-          <img
-            src="/images/garden.jpg"
-            alt="Természet"
-            className="w-full h-full object-cover"
-            style={{ filter: 'brightness(0.7) saturate(0.8)' }}
-          />
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-            style={{ backgroundColor: 'transparent' }}
-          >
-            <p
-              className="font-serif"
-              style={{
-                fontSize: 'clamp(1.3rem, 3vw, 2rem)',
-                color: 'var(--color-charcoal)',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                lineHeight: 1.5,
-                maxWidth: '600px',
-                textShadow: '0 2px 20px rgba(0,0,0,0.3)',
-              }}
-            >
-              „Minden búcsúban egy egész élet néma méltósága rejlik."
-            </p>
-          </div>
-        </div>
       </div>
     </section>
+
   );
 }

@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="hero-overlay absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '50px' }}>
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '80px' }}>
         <div className="animate-fade-in">
           <span className="ornament">✦</span>
         </div>
@@ -41,7 +41,7 @@ export default function Hero() {
 
         <div
           className="section-divider mt-8 mb-8 animate-fade-in-up delay-400"
-          style={{ opacity: 0, marginTop: '57px', marginBottom: '7px' }}
+          style={{ opacity: 0, marginTop: '37px', marginBottom: '7px' }}
         />
 
         <p
