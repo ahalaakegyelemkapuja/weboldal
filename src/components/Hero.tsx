@@ -27,7 +27,7 @@ export default function Hero() {
             className="font-serif animate-fade-in-up mt-4"
             style={{
               fontSize: 'clamp(2.45rem, 6vw, 5.2rem)',
-              color: '#312a28',
+              color: 'white',
               fontWeight: 300,
               lineHeight: 1.15,
               letterSpacing: '-0.01em',
