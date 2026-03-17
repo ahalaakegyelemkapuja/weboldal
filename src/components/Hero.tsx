@@ -25,8 +25,8 @@ export default function Hero() {
         <h1
           className="font-serif animate-fade-in-up mt-4"
           style={{
-            fontSize: 'clamp(2.8rem, 7vw, 5.5rem)',
-            color: 'var(--color-charcoal)',
+            fontSize: 'clamp(2.45rem, 6.3vw, 5.2rem)',
+            color: 'white',
             fontWeight: 300,
             lineHeight: 1.15,
             letterSpacing: '-0.01em',
@@ -45,9 +45,10 @@ export default function Hero() {
           className="font-sans animate-fade-in-up delay-400 mx-auto"
           style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            color: 'var(--color-charcoal)',
+            color: 'white',
             fontWeight: 300,
             maxWidth: '560px',
+            marginTop: '50px',
             lineHeight: 1.8,
             opacity: 0,
           }}

@@ -111,7 +111,10 @@ export default function Services() {
         </div>
 
         {/* Nature image banner */}
-        <div className="mt-16 relative overflow-hidden" style={{ borderRadius: '2px', height: '280px' }}>
+        <div
+          className="mt-16 relative overflow-hidden h-[140px] md:h-[280px]"
+          style={{ borderRadius: '2px' }}
+        >
           <img
             src="/images/garden.jpg"
             alt="Természet"
@@ -126,7 +129,7 @@ export default function Services() {
               className="font-serif"
               style={{
                 fontSize: 'clamp(1.3rem, 3vw, 2rem)',
-                color: 'white',
+                color: 'var(--color-charcoal)',
                 fontWeight: 300,
                 fontStyle: 'italic',
                 lineHeight: 1.5,
@@ -134,7 +137,7 @@ export default function Services() {
                 textShadow: '0 2px 20px rgba(0,0,0,0.3)',
               }}
             >
-              „Minden szertartás egyedi — mert minden élet az volt."
+              „Minden búcsúban egy egész élet néma méltósága rejlik."
             </p>
           </div>
         </div>
