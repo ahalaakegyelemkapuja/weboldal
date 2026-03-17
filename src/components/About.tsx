@@ -68,8 +68,8 @@ export default function About() {
                 lineHeight: 1.2,
               }}
             >
-              Nem csupán egy búcsúbeszéd —
-              <em style={{ fontStyle: 'italic', color: 'var(--color-sage-dark)' }}> egy emlék, amely megmarad</em>
+              Nem csupán egy búcsúbeszéd.
+              <em style={{ fontStyle: 'italic', color: 'var(--color-sage-dark)' }}> Egy emlék, amely megmarad</em>
             </h2>
 
             <div className="section-divider mb-8" style={{ margin: '0 0 2rem 0' }} />

@@ -45,6 +45,7 @@ export default function Services() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
+              transform: 'translateY(-20px)',
             }}
           >
             Miben segíthetek

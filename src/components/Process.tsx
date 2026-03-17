@@ -45,18 +45,20 @@ export default function Process() {
           >
             A folyamat
           </p>
-          <h2
-            className="font-serif"
-            style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: 'var(--color-charcoal)',
-              fontWeight: 300,
-              lineHeight: 1.2,
-            }}
-          >
-            Hogyan dolgozom
-          </h2>
-          <div className="section-divider mb-6" style={{ marginTop: '4px' }} />
+          <div style={{ transform: 'translateY(-10px)' }}>
+            <h2
+              className="font-serif"
+              style={{
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                color: 'var(--color-charcoal)',
+                fontWeight: 300,
+                lineHeight: 1.2,
+              }}
+            >
+              Hogyan dolgozom
+            </h2>
+            <div className="section-divider mb-6" style={{ marginTop: '4px' }} />
+          </div>
           <p
             className="font-sans mx-auto"
             style={{

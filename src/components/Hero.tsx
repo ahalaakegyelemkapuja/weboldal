@@ -18,31 +18,33 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingTop: '110px' }}>
-        <div className="animate-fade-in">
-          <span className="ornament">✦</span>
+        <div style={{ transform: 'translateY(-10px)' }}>
+          <div className="animate-fade-in">
+            <span className="ornament">✦</span>
+          </div>
+
+          <h1
+            className="font-serif animate-fade-in-up mt-4"
+            style={{
+              fontSize: 'clamp(2.45rem, 6vw, 5.2rem)',
+              color: '#312a28',
+              fontWeight: 300,
+              lineHeight: 1.15,
+              letterSpacing: '-0.01em',
+              animationDelay: '0.2s',
+              opacity: 0,
+            }}
+          >
+            Méltóságteljes búcsú,
+            <br />
+            <em style={{ fontStyle: 'italic', color: 'white' }}>személyre szabva</em>
+          </h1>
+
+          <div
+            className="section-divider mt-8 mb-8 animate-fade-in-up delay-400"
+            style={{ opacity: 0, marginTop: '17px', marginBottom: '7px' }}
+          />
         </div>
-
-        <h1
-          className="font-serif animate-fade-in-up mt-4"
-          style={{
-            fontSize: 'clamp(2.45rem, 6vw, 5.2rem)',
-            color: '#312a28',
-            fontWeight: 300,
-            lineHeight: 1.15,
-            letterSpacing: '-0.01em',
-            animationDelay: '0.2s',
-            opacity: 0,
-          }}
-        >
-          Méltóságteljes búcsú,
-          <br />
-          <em style={{ fontStyle: 'italic', color: 'white' }}>személyre szabva</em>
-        </h1>
-
-        <div
-          className="section-divider mt-8 mb-8 animate-fade-in-up delay-400"
-          style={{ opacity: 0, marginTop: '22px', marginBottom: '7px' }}
-        />
 
         <p
           className="font-sans animate-fade-in-up delay-400 mx-auto"

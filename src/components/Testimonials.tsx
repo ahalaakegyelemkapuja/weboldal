@@ -38,6 +38,7 @@ export default function Testimonials() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
+              transform: 'translateY(-10px)',
             }}
           >
             Amit a családok mondanak
