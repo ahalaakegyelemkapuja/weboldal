@@ -64,6 +64,18 @@ body {
   to { opacity: 1; }
 }
 
+@keyframes loaderLogoIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes floatUp {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
@@ -75,6 +87,70 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 1.2s ease-out forwards;
+}
+
+.app-shell {
+  min-height: 100vh;
+  transition: opacity 0.72s ease, transform 0.82s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app-shell-loading {
+  opacity: 0;
+  transform: translateY(28px) scale(1.01);
+}
+
+.app-shell-revealing,
+.app-shell-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 22px 70px rgba(58, 53, 48, 0.12);
+  transform: translateY(0);
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.site-loader-exit {
+  transform: translateY(105%);
+}
+
+.site-loader-logo {
+  width: clamp(26px, 2.7vw, 34px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(6px) scale(0.88);
+  animation: loaderLogoIn 0.32s ease-out 0.08s forwards;
+}
+
+.site-loader-exit .site-loader-logo {
+  opacity: 0;
+  transform: translateY(22px) scale(0.92);
+  transition: opacity 0.22s ease, transform 0.42s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell,
+  .site-loader,
+  .site-loader-logo,
+  .site-loader-exit .site-loader-logo {
+    animation: none;
+    transition-duration: 0.01ms;
+  }
+
+  .app-shell-loading {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero-glass-button {
