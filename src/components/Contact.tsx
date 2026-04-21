@@ -23,7 +23,7 @@ export default function Contact() {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'ismeretlen hiba';
       setSubmitError(
-        `Az uzenet kuldese nem sikerult. Kerem probalja ujra, vagy irjon a bfodorbiz@gmail.com cimre. (${message})`
+        `Az uzenet kuldese nem sikerult. Kerem probalja ujra, vagy irjon a kovacs.aniko.szertartasvezeto@gmail.com cimre. (${message})`
       );
       console.error('FormSubmit failed', error);
     } finally {

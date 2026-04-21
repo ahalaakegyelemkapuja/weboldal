@@ -8,8 +8,50 @@ export type InquiryFormData = {
 
 export type InquiryKind = 'funeral' | 'wedding';
 
-const recipientEmail = 'bfodorbiz@gmail.com';
+const fallbackRecipientEmail = 'kovacs.aniko.szertartasvezeto@gmail.com';
 const contactApiEndpoint = '/api/contact';
+
+function extractErrorText(payload: unknown) {
+  if (typeof payload === 'string') {
+    return payload;
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return '';
+  }
+
+  if ('error' in payload) {
+    const nestedError = (payload as { error: unknown }).error;
+
+    if (typeof nestedError === 'string') {
+      return nestedError;
+    }
+
+    if (nestedError && typeof nestedError === 'object') {
+      if ('message' in nestedError && typeof (nestedError as { message?: unknown }).message === 'string') {
+        return (nestedError as { message: string }).message;
+      }
+
+      try {
+        return JSON.stringify(nestedError);
+      } catch {
+        return String(nestedError);
+      }
+    }
+
+    return String(nestedError);
+  }
+
+  if ('message' in payload && typeof (payload as { message?: unknown }).message === 'string') {
+    return (payload as { message: string }).message;
+  }
+
+  try {
+    return JSON.stringify(payload);
+  } catch {
+    return String(payload);
+  }
+}
 
 export function buildInquiryDraftLinks(formData: InquiryFormData, inquiryKind: InquiryKind) {
   const subject = inquiryKind === 'wedding' ? 'Esküvői megkeresés' : 'Búcsúztatási megkeresés';
@@ -26,14 +68,14 @@ export function buildInquiryDraftLinks(formData: InquiryFormData, inquiryKind: I
   const query = new URLSearchParams({
     view: 'cm',
     fs: '1',
-    to: recipientEmail,
+    to: fallbackRecipientEmail,
     su: subject,
     body,
   });
 
   return {
     gmailHref: `https://mail.google.com/mail/?${query.toString()}`,
-    mailtoHref: `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+    mailtoHref: `mailto:${fallbackRecipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
   };
 }
 
@@ -55,17 +97,16 @@ export async function submitInquiryForm(formData: InquiryFormData, inquiryKind: 
   });
 
   let payload: unknown = null;
+  let rawText = '';
   try {
-    payload = await response.json();
+    rawText = await response.text();
+    payload = rawText ? JSON.parse(rawText) : null;
   } catch {
-    payload = null;
+    payload = rawText || null;
   }
 
   if (!response.ok) {
-    const errorText =
-      typeof payload === 'object' && payload !== null && 'error' in payload
-        ? String((payload as { error: unknown }).error)
-        : response.statusText;
+    const errorText = extractErrorText(payload) || response.statusText;
     throw new Error(`Mail API error ${response.status}: ${errorText || 'Unknown error'}`);
   }
 

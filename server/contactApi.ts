@@ -28,8 +28,17 @@ class HttpError extends Error {
   }
 }
 
-let cachedTransporter: nodemailer.Transporter | null = null;
-let cachedTransporterKey = '';
+type SmtpConfig = {
+  host: string;
+  port: number;
+  secure: boolean;
+  auth: {
+    user: string;
+    pass: string;
+  };
+  from: string;
+  to: string;
+};
 
 function parseBoolean(value: string | undefined, fallbackValue: boolean) {
   if (value === undefined) {
@@ -67,28 +76,30 @@ function getSmtpConfig() {
     },
     from: process.env.SMTP_FROM?.trim() || smtpUser,
     to: process.env.CONTACT_TO_EMAIL?.trim() || defaultRecipientEmail,
-  };
+  } satisfies SmtpConfig;
 }
 
-function getTransporter() {
-  const smtpConfig = getSmtpConfig();
-  const transportKey = JSON.stringify(smtpConfig);
+function getSmtpConfigCandidates() {
+  const primaryConfig = getSmtpConfig();
 
-  if (!cachedTransporter || cachedTransporterKey !== transportKey) {
-    cachedTransporter = nodemailer.createTransport({
-      host: smtpConfig.host,
-      port: smtpConfig.port,
-      secure: smtpConfig.secure,
-      auth: smtpConfig.auth,
-    });
-    cachedTransporterKey = transportKey;
+  if (primaryConfig.host !== 'smtp.gmail.com') {
+    return [primaryConfig];
   }
 
-  return {
-    transporter: cachedTransporter,
-    from: smtpConfig.from,
-    to: smtpConfig.to,
+  const fallbackConfig: SmtpConfig = {
+    ...primaryConfig,
+    port: primaryConfig.port === 465 ? 587 : 465,
+    secure: primaryConfig.port === 465 ? false : true,
   };
+
+  if (
+    fallbackConfig.port === primaryConfig.port &&
+    fallbackConfig.secure === primaryConfig.secure
+  ) {
+    return [primaryConfig];
+  }
+
+  return [primaryConfig, fallbackConfig];
 }
 
 function escapeHtml(value: string) {
@@ -183,7 +194,7 @@ function sendJson(res: ServerResponse, statusCode: number, body: unknown) {
 }
 
 async function sendInquiryEmail(payload: InquiryPayload) {
-  const { transporter, from, to } = getTransporter();
+  const smtpConfigs = getSmtpConfigCandidates();
   const subject = getInquirySubject(payload.kind);
   const sourceLabel = getInquirySourceLabel(payload.kind);
   const telefon = payload.telefon || 'Nincs megadva';
@@ -211,18 +222,84 @@ async function sendInquiryEmail(payload: InquiryPayload) {
     </div>
   `;
 
-  const info = await transporter.sendMail({
-    from,
-    to,
-    replyTo: payload.email,
-    subject,
-    text,
-    html,
-  });
+  let lastError: unknown = null;
 
-  return {
-    messageId: info.messageId,
-  };
+  for (const smtpConfig of smtpConfigs) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: smtpConfig.host,
+        port: smtpConfig.port,
+        secure: smtpConfig.secure,
+        auth: smtpConfig.auth,
+      });
+
+      const info = await transporter.sendMail({
+        from: smtpConfig.from,
+        to: smtpConfig.to,
+        replyTo: payload.email,
+        subject,
+        text,
+        html,
+      });
+
+      return {
+        messageId: info.messageId,
+      };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError;
+}
+
+function describeUnknownError(error: unknown) {
+  if (error instanceof Error) {
+    const detailedError = error as Error & {
+      code?: unknown;
+      command?: unknown;
+      response?: unknown;
+      responseCode?: unknown;
+    };
+
+    const parts = [error.message];
+
+    if (typeof detailedError.code === 'string' && detailedError.code) {
+      parts.push(`code=${detailedError.code}`);
+    }
+
+    if (typeof detailedError.command === 'string' && detailedError.command) {
+      parts.push(`command=${detailedError.command}`);
+    }
+
+    if (typeof detailedError.responseCode === 'number') {
+      parts.push(`responseCode=${String(detailedError.responseCode)}`);
+    }
+
+    if (typeof detailedError.response === 'string' && detailedError.response.trim()) {
+      parts.push(detailedError.response.trim());
+    }
+
+    return parts.join(' | ');
+  }
+
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  if (error && typeof error === 'object') {
+    if ('message' in error && typeof (error as { message?: unknown }).message === 'string') {
+      return (error as { message: string }).message;
+    }
+
+    try {
+      return JSON.stringify(error);
+    } catch {
+      return 'Unknown server error.';
+    }
+  }
+
+  return 'Unknown server error.';
 }
 
 export async function handleContactRequest(req: RequestWithBody, res: ServerResponse) {
@@ -271,7 +348,7 @@ export async function handleContactRequest(req: RequestWithBody, res: ServerResp
 
     sendJson(res, 500, {
       ok: false,
-      error: error instanceof Error ? error.message : 'Unknown server error.',
+      error: describeUnknownError(error),
     });
   }
 }
