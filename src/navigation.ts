@@ -1,11 +1,12 @@
-export function getNormalizedPath(pathname = window.location.pathname, hash?: string) {
-  const resolvedHash = hash ?? (pathname === window.location.pathname ? window.location.hash : '');
+export function getNormalizedPath(pathname?: string, hash?: string) {
+  const resolvedPathname = pathname ?? window.location.pathname;
+  const resolvedHash = pathname === undefined && hash === undefined ? window.location.hash : (hash ?? '');
 
   if (typeof resolvedHash === 'string' && resolvedHash.startsWith('#/')) {
     return resolvedHash.slice(1).replace(/\/+$/, '') || '/';
   }
 
-  return pathname.replace(/\/+$/, '') || '/';
+  return resolvedPathname.replace(/\/+$/, '') || '/';
 }
 
 export function isRouteHref(href: string) {
@@ -13,7 +14,7 @@ export function isRouteHref(href: string) {
 }
 
 export function navigateToPath(path: string) {
-  const nextPath = getNormalizedPath(path);
+  const nextPath = getNormalizedPath(path, '');
   const currentPath = getNormalizedPath();
 
   if (nextPath !== currentPath) {
