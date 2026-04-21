@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var path = window.location.pathname + window.location.search + window.location.hash;
+        if (path === '/' || path === '/index.html') {
+          window.location.replace('/');
+          return;
+        }
+
+        var hashPath = '#/' + window.location.pathname.replace(/^\//, '') + window.location.search + window.location.hash;
+        window.location.replace('/' + hashPath);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting…</p>
+  </body>
+</html>
