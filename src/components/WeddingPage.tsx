@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { buildInquiryDraftLinks, submitInquiryForm } from '../contactForm';
 import { useHeroGlassReady } from '../useHeroGlassReady';
 
 const weddingProcess = [
@@ -35,19 +36,44 @@ const weddingProcess = [
   },
 ];
 
-const defaultWeddingVideoEmbedSrc = 'https://drive.google.com/file/d/10N_-OyC7JJJlqUwvaCcOSAoj_RkeqX0p/preview';
+const defaultWeddingVideoUrl = 'https://drive.google.com/file/d/10N_-OyC7JJJlqUwvaCcOSAoj_RkeqX0p/view';
+
+function getWeddingVideoUrl(src: string) {
+  return src.replace('/preview', '/view');
+}
 
 export default function WeddingPage() {
   const isHeroGlassReady = useHeroGlassReady();
-  const [form, setForm] = useState({ nev: '', email: '', telefon: '', tema: 'Esküvői szertartás', uzenet: '' });
+  const initialForm = { nev: '', email: '', telefon: '', tema: 'Esküvői szertartás', uzenet: '' };
+  const [form, setForm] = useState(initialForm);
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const draftLinks = buildInquiryDraftLinks(form, 'wedding');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setSent(true);
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const result = await submitInquiryForm(form, 'wedding');
+      console.log('FormSubmit success', result);
+      setSent(true);
+      setForm(initialForm);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'ismeretlen hiba';
+      setSubmitError(
+        `Az uzenet kuldese nem sikerult. Kerem probalja ujra, vagy irjon a bfodorbiz@gmail.com cimre. (${message})`
+      );
+      console.error('FormSubmit failed', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const weddingVideoEmbedSrc = import.meta.env.VITE_WEDDING_VIDEO_URL?.trim() || defaultWeddingVideoEmbedSrc;
+  const weddingVideoUrl = getWeddingVideoUrl(import.meta.env.VITE_WEDDING_VIDEO_URL?.trim() || defaultWeddingVideoUrl);
 
   const inputStyle = {
     width: '100%',
@@ -351,16 +377,44 @@ export default function WeddingPage() {
               boxShadow: '0 18px 50px rgba(58,53,48,0.08)',
             }}
           >
-            <div className="relative w-full overflow-hidden" style={{ paddingTop: '56.25%', borderRadius: '2px' }}>
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                style={{ border: 'none', borderRadius: '2px' }}
-                src={weddingVideoEmbedSrc}
-                title="Esküvői videó"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              />
+            <div
+              className="flex w-full items-center justify-center text-center"
+              style={{
+                minHeight: 'min(56.25vw, 32rem)',
+                borderRadius: '2px',
+                background:
+                  'linear-gradient(180deg, rgba(250, 247, 242, 0.42) 0%, rgba(244, 235, 228, 0.92) 100%)',
+                padding: '2rem',
+              }}
+            >
+              <div style={{ maxWidth: '34rem' }}>
+                <p
+                  className="font-sans"
+                  style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.85, margin: 0 }}
+                >
+                  A Google Drive ezt a videót nem engedi közvetlenül beágyazni, ezért külön lapon nyílik meg.
+                </p>
+                <a
+                  href={weddingVideoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center font-sans text-sm tracking-widest uppercase transition-all duration-300"
+                  style={{
+                    marginTop: '1.5rem',
+                    minHeight: '3.25rem',
+                    padding: '0 1.5rem',
+                    backgroundColor: 'var(--color-dusty-rose)',
+                    color: 'white',
+                    borderRadius: '2px',
+                    letterSpacing: '0.12em',
+                    fontWeight: 400,
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
+                >
+                  Videó megnyitása
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -695,21 +749,49 @@ export default function WeddingPage() {
 
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full py-4 font-sans text-sm tracking-widest uppercase transition-all duration-300"
                     style={{
                       backgroundColor: 'var(--color-dusty-rose)',
                       color: 'white',
                       border: 'none',
                       borderRadius: '2px',
-                      cursor: 'pointer',
+                      cursor: isSubmitting ? 'wait' : 'pointer',
                       letterSpacing: '0.12em',
                       fontWeight: 400,
+                      opacity: isSubmitting ? 0.8 : 1,
                     }}
                     onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
                     onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
                   >
-                    Üzenet küldése
+                    {isSubmitting ? 'Kuldes...' : 'Üzenet küldése'}
                   </button>
+
+                  {submitError ? (
+                    <>
+                      <p className="font-sans text-xs text-center" style={{ color: '#9f4a4a', fontWeight: 300 }}>
+                        {submitError}
+                      </p>
+                      <div className="flex flex-wrap items-center justify-center gap-3">
+                        <a
+                          href={draftLinks.gmailHref}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-sans text-xs tracking-widest uppercase"
+                          style={{ color: '#ad8580', fontWeight: 400 }}
+                        >
+                          Megnyitás Gmailben
+                        </a>
+                        <a
+                          href={draftLinks.mailtoHref}
+                          className="font-sans text-xs tracking-widest uppercase"
+                          style={{ color: '#ad8580', fontWeight: 400 }}
+                        >
+                          Megnyitás e-mailben
+                        </a>
+                      </div>
+                    </>
+                  ) : null}
 
                   <p className="font-sans text-xs text-center" style={{ color: 'var(--color-stone)', fontWeight: 300 }}>
                     Adatait bizalmasan kezelem.

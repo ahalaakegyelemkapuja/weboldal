@@ -1,5 +1,25 @@
 # React + TypeScript + Vite
 
+## Contact Form Backend
+
+The contact forms now post to the same-origin `/api/contact` endpoint instead of FormSubmit.
+
+For local development, copy `.env.example` to `.env.local` and fill in your SMTP credentials.
+
+Required environment variables:
+
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_SECURE`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_FROM`
+- `CONTACT_TO_EMAIL`
+
+For Gmail SMTP, use an app password instead of your normal Gmail password.
+
+On the deployed host, set the same variables in the project environment settings so the hosted `/api/contact` route can send mail.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

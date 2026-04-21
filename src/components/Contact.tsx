@@ -1,12 +1,34 @@
 import { useState } from 'react';
+import { buildInquiryDraftLinks, submitInquiryForm } from '../contactForm';
 
 export default function Contact() {
-  const [form, setForm] = useState({ nev: '', email: '', telefon: '', tema: 'Temetési szertartás', uzenet: '' });
+  const initialForm = { nev: '', email: '', telefon: '', tema: 'Temetési szertartás', uzenet: '' };
+  const [form, setForm] = useState(initialForm);
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const draftLinks = buildInquiryDraftLinks(form, 'funeral');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const result = await submitInquiryForm(form, 'funeral');
+      console.log('FormSubmit success', result);
+      setSent(true);
+      setForm(initialForm);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'ismeretlen hiba';
+      setSubmitError(
+        `Az uzenet kuldese nem sikerult. Kerem probalja ujra, vagy irjon a bfodorbiz@gmail.com cimre. (${message})`
+      );
+      console.error('FormSubmit failed', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -269,21 +291,49 @@ export default function Contact() {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full py-4 font-sans text-sm tracking-widest uppercase transition-all duration-300"
                   style={{
                     backgroundColor: 'var(--color-sage)',
                     color: 'white',
                     border: 'none',
                     borderRadius: '2px',
-                    cursor: 'pointer',
+                    cursor: isSubmitting ? 'wait' : 'pointer',
                     letterSpacing: '0.12em',
                     fontWeight: 400,
+                    opacity: isSubmitting ? 0.8 : 1,
                   }}
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--color-sage-dark)')}
                   onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-sage)')}
                 >
-                  Üzenet küldése
+                  {isSubmitting ? 'Kuldes...' : 'Üzenet küldése'}
                 </button>
+
+                {submitError ? (
+                  <>
+                    <p className="font-sans text-xs text-center" style={{ color: '#9f4a4a', fontWeight: 300 }}>
+                      {submitError}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center gap-3">
+                      <a
+                        href={draftLinks.gmailHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-sans text-xs tracking-widest uppercase"
+                        style={{ color: 'var(--color-sage-dark)', fontWeight: 400 }}
+                      >
+                        Megnyitás Gmailben
+                      </a>
+                      <a
+                        href={draftLinks.mailtoHref}
+                        className="font-sans text-xs tracking-widest uppercase"
+                        style={{ color: 'var(--color-sage-dark)', fontWeight: 400 }}
+                      >
+                        Megnyitás e-mailben
+                      </a>
+                    </div>
+                  </>
+                ) : null}
 
                 <p className="font-sans text-xs text-center" style={{ color: 'var(--color-stone)', fontWeight: 300 }}>
                   Adatait bizalmasan kezelem.
