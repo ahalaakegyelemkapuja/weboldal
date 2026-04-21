@@ -48,12 +48,23 @@ function parseBoolean(value: string | undefined, fallbackValue: boolean) {
   return ['1', 'true', 'yes', 'on'].includes(value.toLowerCase());
 }
 
+function normalizeEnvValue(value: string | undefined) {
+  if (value === undefined) {
+    return '';
+  }
+
+  return value
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .trim()
+    .replace(/^['"]+|['"]+$/g, '');
+}
+
 function getSmtpConfig() {
-  const smtpUser = process.env.SMTP_USER?.trim() ?? '';
-  const smtpPass = process.env.SMTP_PASS?.replace(/\s+/g, '') ?? '';
-  const smtpHost = process.env.SMTP_HOST?.trim() || (smtpUser.endsWith('@gmail.com') ? 'smtp.gmail.com' : '');
-  const smtpPort = Number(process.env.SMTP_PORT?.trim() || '465');
-  const smtpSecure = parseBoolean(process.env.SMTP_SECURE?.trim(), smtpPort === 465);
+  const smtpUser = normalizeEnvValue(process.env.SMTP_USER);
+  const smtpPass = normalizeEnvValue(process.env.SMTP_PASS).replace(/\s+/g, '');
+  const smtpHost = normalizeEnvValue(process.env.SMTP_HOST) || (smtpUser.endsWith('@gmail.com') ? 'smtp.gmail.com' : '');
+  const smtpPort = Number(normalizeEnvValue(process.env.SMTP_PORT) || '465');
+  const smtpSecure = parseBoolean(normalizeEnvValue(process.env.SMTP_SECURE), smtpPort === 465);
 
   if (!smtpHost || !smtpUser || !smtpPass) {
     throw new HttpError(
@@ -74,8 +85,8 @@ function getSmtpConfig() {
       user: smtpUser,
       pass: smtpPass,
     },
-    from: process.env.SMTP_FROM?.trim() || smtpUser,
-    to: process.env.CONTACT_TO_EMAIL?.trim() || defaultRecipientEmail,
+    from: normalizeEnvValue(process.env.SMTP_FROM) || smtpUser,
+    to: normalizeEnvValue(process.env.CONTACT_TO_EMAIL) || defaultRecipientEmail,
   } satisfies SmtpConfig;
 }
 
