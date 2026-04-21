@@ -1,8 +1,4 @@
-import { useHeroGlassReady } from '../useHeroGlassReady';
-
 export default function Hero() {
-  const isHeroGlassReady = useHeroGlassReady();
-
   return (
     <section
       className="relative flex items-center justify-center overflow-visible"
@@ -86,9 +82,11 @@ export default function Hero() {
           <div className="flex flex-row flex-nowrap justify-center gap-3" style={{ maxWidth: 'min(520px, 100%)', margin: '0 auto', pointerEvents: 'auto' }}>
             <a
               href="#folyamat"
-              className={`hero-glass-button funeral-hero-glass ${isHeroGlassReady ? 'hero-glass-button-ready' : ''} font-sans min-w-0 px-7 py-3.5 text-[0.72rem] tracking-widest uppercase transition-all duration-300 sm:px-8 sm:py-4 sm:text-sm`}
+              className="hero-glass-button funeral-hero-glass font-sans min-w-0 px-7 py-3.5 text-[0.72rem] tracking-widest uppercase transition-all duration-300 sm:px-8 sm:py-4 sm:text-sm"
               style={{
                 color: 'white',
+                backdropFilter: 'blur(10px) saturate(110%)',
+                WebkitBackdropFilter: 'blur(10px) saturate(110%)',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.67)';

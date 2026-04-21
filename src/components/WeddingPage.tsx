@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { buildInquiryDraftLinks, submitInquiryForm } from '../contactForm';
-import { useHeroGlassReady } from '../useHeroGlassReady';
 
 const weddingProcess = [
   {
@@ -43,7 +42,6 @@ function getWeddingVideoUrl(src: string) {
 }
 
 export default function WeddingPage() {
-  const isHeroGlassReady = useHeroGlassReady();
   const initialForm = { nev: '', email: '', telefon: '', tema: 'Esküvői szertartás', uzenet: '' };
   const [form, setForm] = useState(initialForm);
   const [sent, setSent] = useState(false);
@@ -174,10 +172,12 @@ export default function WeddingPage() {
             <div className="flex flex-row flex-nowrap justify-center gap-3" style={{ maxWidth: 'min(520px, 100%)', margin: '0 auto', pointerEvents: 'auto' }}>
               <a
                 href="#ceremonia"
-                className={`hero-glass-button wedding-hero-glass ${isHeroGlassReady ? 'hero-glass-button-ready' : ''} font-sans min-w-0 px-5.5 py-3.5 text-[0.72rem] tracking-widest uppercase transition-all duration-300 sm:px-8 sm:py-4 sm:text-sm`}
+                className="hero-glass-button wedding-hero-glass font-sans min-w-0 px-5.5 py-3.5 text-[0.72rem] tracking-widest uppercase transition-all duration-300 sm:px-8 sm:py-4 sm:text-sm"
                 style={{
                   color: 'white',
                   whiteSpace: 'nowrap',
+                  backdropFilter: 'blur(10px) saturate(110%)',
+                  WebkitBackdropFilter: 'blur(10px) saturate(110%)',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.67)';
