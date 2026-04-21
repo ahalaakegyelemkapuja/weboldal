@@ -3,8 +3,7 @@ export default function About() {
     <section id="rolam" className="pt-6 pb-24 px-6" style={{ backgroundColor: 'var(--color-cream)' }}>
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Image side */}
-          <div className="relative">
+          <div className="relative mx-auto w-full md:max-w-[420px]">
             <div
               className="absolute -top-4 -left-4 w-full h-full"
               style={{
@@ -13,15 +12,13 @@ export default function About() {
               }}
             />
             <img
-              src="/images/roses.jpg"
-              alt="Fehér rózsák"
-              className="relative w-full aspect-square md:aspect-auto md:h-[520px] object-cover"
+              src="/images/Anika.webp"
+              alt="Kovács Anikó szertartásvezető"
+              className="relative w-full h-auto object-cover"
               style={{
                 borderRadius: '2px',
-                filter: 'brightness(0.95) saturate(0.9)',
               }}
             />
-            {/* Quote card */}
             <div
               className="absolute -bottom-8 -right-4 md:-right-8 p-6 max-w-xs"
               style={{
@@ -40,18 +37,17 @@ export default function About() {
                   lineHeight: 1.6,
                 }}
               >
-                „A hála a kegyelem kapuja"
+                „A szeretetteljes kedvesség  <br /> terében találkozunk.”
               </p>
               <p
                 className="font-sans mt-3 text-xs tracking-widest uppercase"
                 style={{ color: 'var(--color-gold)' }}
               >
-                — Kovács Anikó
+                — Anikó
               </p>
             </div>
           </div>
 
-          {/* Text side */}
           <div className="md:pl-8 mt-8 md:mt-0">
             <p
               className="font-sans text-xs tracking-widest uppercase mb-4"
@@ -68,53 +64,46 @@ export default function About() {
                 lineHeight: 1.2,
               }}
             >
-              Nem csupán egy búcsúbeszéd.
-              <em style={{ fontStyle: 'italic', color: 'var(--color-sage-dark)' }}> Egy emlék, amely megmarad</em>
+              Kedves Látogató!
             </h2>
 
             <div className="section-divider mb-8" style={{ margin: '0 0 2rem 0' }} />
 
             <div
               className="font-sans space-y-5"
-              style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.85 }}
+              style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.9 }}
             >
               <p>
-                Kovács Anikóként polgári búcsúztató vagyok, aki hisz abban, hogy az utolsó búcsú nemcsak egy formalitás,
-                hanem az egyik legmélyebb emberi pillanat — és ezt a pillanatot megérdemli, hogy valóban{' '}
-                <strong style={{ fontWeight: 500 }}>személyre szabott</strong> legyen.
+                Kovács Anikó szertartásvezető vagyok. Pár éve foglalkozom polgári búcsúszertartások
+                lebonyolításával és gyásztanácsadással. A segítségnyújtás szándéka, a szolgálat, végső soron a
+                hitem hozott erre a pályára. Ez vezet arra engem, hogy a szívembe érkező szeretetet a tőlem
+                telhető legnagyobb kedvességgel megosszam másokkal. Így jön létre egy tér, amelyben az élet
+                fontos pillanatai különlegessé, gyógyítóvá és valódivá válhatnak. Egy szóval: intimmé.
               </p>
               <p>
-                Munkám során türelemmel hallgatom meg a család emlékeit, történeteit, a szeretett személy
-                jellemzőit és értékeit. Ebből születik meg az a búcsúbeszéd, amely nem általános sablonból épül,
-                hanem <strong style={{ fontWeight: 500 }}>egyedül az ő életéről</strong> szól.
+                Keleti és nyugati vallásfilozófiai művekből, valamint a családomban megélt mély
+                szeretet-kapcsolódás tapasztalati élményéből merítettem az igazságmorzsákat, melyek az elmúlt
+                években hit formájában váltak a valóságommá.
               </p>
               <p>
-                Szertartásaim vallástól függetlenek, így minden hitű és meggyőződésű család számára
-                természetes otthont teremtenek a gyász és az emlékezés számára.
+                Ezek az elemek nem, vagy csak külön kérés esetén jelennek meg a szertartásaimban, hiszen
+                polgári ceremóniákról beszélünk. Inkább a hozzáállás az, ami ezekből fakadva jelenik meg a
+                munkámban, és hozzáadott értéket teremt a családok számára ezeken a kiemelt
+                életeseményeken.
               </p>
-            </div>
-
-            <div className="mt-10 grid grid-cols-3 gap-3 sm:gap-6">
-              {[
-                { num: '12+', label: 'év tapasztalat' },
-                { num: '400+', label: 'szertartás' },
-                { num: '100%', label: 'személyre szabott' },
-              ].map(stat => (
-                <div key={stat.label} className="text-center min-w-0">
-                  <div
-                    className="font-serif"
-                    style={{ fontSize: '1.8rem', color: 'var(--color-sage-dark)', fontWeight: 400, lineHeight: 1.1 }}
-                  >
-                    {stat.num}
-                  </div>
-                  <div
-                    className="font-sans text-[0.62rem] sm:text-xs tracking-[0.18em] uppercase mt-1"
-                    style={{ color: 'var(--color-stone)' }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+              <p>
+                Pszichológia alapképzést végeztem, valamint gyásztanácsadó és gyászcsoportvezető oklevelem
+                van.
+              </p>
+              <p>
+                Hiszek abban, hogy a valódi intimitás túlmutat rajtunk. A szeretetteljes kedvesség terében
+                találkozunk.
+              </p>
+              <p>
+                Hálatelt szívvel a hivatásomért,
+                <br />
+                Anikó
+              </p>
             </div>
           </div>
         </div>

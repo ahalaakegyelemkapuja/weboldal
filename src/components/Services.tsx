@@ -2,23 +2,20 @@ const services = [
   {
     title: 'Temetési szertartás',
     description:
-      'Teljes körű polgári búcsúszertartás lebonyolítása: a konzultációtól a búcsúbeszéd megírásán át a szertartás méltóságteljes levezetéséig. Ravatalos termekben, temetőkápolnákban egyaránt.',
-    features: ['Személyes konzultáció', 'Egyedi búcsúbeszéd', 'Szertartás levezetése', 'Zenei koordináció'],
+      'Teljeskörű polgári búcsúszertartás lebonyolítása: a konzultációtól a búcsúbeszéd megírásán át a szertartás méltóságteljes levezetéséig, bármilyen helyszínen (otthon, temetőben, a fővárosban, vidéken, hajón), akár angol nyelven.',
+    features: [
+      'Konzultáció (írásban/telefonon/személyesen)',
+      'Egyedi búcsúbeszéd írása',
+      'Szertartás levezetése',
+    ],
     accent: 'var(--color-sage)',
   },
   {
-    title: 'Hamvasztásos búcsú',
+    title: 'Gyásztanácsadás / gyászcsoport vezetés',
     description:
-      'Urnatemetések és hamvasztást követő megemlékezések személyes, bensőséges levezetése. Kisebb körű, intim szertartásokhoz is ideális — ahol a szó és az emlék a legfontosabb.',
-    features: ['Urnatemetés', 'Intim megemlékezés', 'Kegyeleti helyszín', 'Szűk körű szertartás'],
+      'A gyász nem probléma, amit meg kell oldani, hanem folyamat, amiben segít, ha van mellettünk valaki: 10 alkalmas egyéni vagy kiscsoportos veszteségfeldolgozó foglalkozás, mely szintén a szeretetteljes kedvesség légkörében, biztonságban, játékos feladatokon keresztül visz közelebb a gyász megértéséhez, az érzelmek feldolgozásához és a megerősödéshez.',
+    features: ['Személyes találkozók', '10 hetes elköteleződés', 'Önismereti munka'],
     accent: 'var(--color-dusty-rose)',
-  },
-  {
-    title: 'Gyászszertartás szervezés',
-    description:
-      'Ha nem csupán a búcsúbeszédet, hanem a szertartás teljes szervezését is szeretnék rám bízni: helyszín, zene, virágok, koordináció — minden részletre figyelek, hogy Önöknek csak jelen kelljen lenniük.',
-    features: ['Teljes szervezés', 'Helyszínkoordináció', 'Zenei program', 'Virágdekoráció'],
-    accent: 'var(--color-gold)',
   },
 ];
 
@@ -26,18 +23,11 @@ export default function Services() {
   return (
     <section
       id="szolgaltatasok"
-      className="py-24 px-6"
+      className="pt-12 pb-24 px-6"
       style={{ backgroundColor: 'var(--color-cream)' }}
     >
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-16" style={{ marginTop: '-40px' }}>
-          <p
-            className="font-sans text-xs tracking-widest uppercase mb-4"
-            style={{ color: 'var(--color-sage)' }}
-          >
-            Szolgáltatások
-          </p>
+        <div className="text-center mb-10">
           <h2
             className="font-serif"
             style={{
@@ -45,16 +35,14 @@ export default function Services() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
-              transform: 'translateY(-10px)',
             }}
           >
-            Miben segíthetek
+            Szolgáltatások
           </h2>
-          <div className="section-divider mt-6 mb-6" style={{ transform: 'translateY(10px)' }} />
+          <div className="section-divider" style={{ margin: '1.7rem auto 0.5rem' }} />
         </div>
 
-        {/* Service cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {services.map(service => (
             <div
               key={service.title}
@@ -66,7 +54,6 @@ export default function Services() {
                 overflow: 'hidden',
               }}
             >
-              {/* Accent bar */}
               <div style={{ height: '3px', backgroundColor: service.accent }} />
 
               <div className="p-8 flex flex-col flex-1">
@@ -109,6 +96,36 @@ export default function Services() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div
+          className="mt-14 p-8 text-center"
+          style={{
+            backgroundColor: 'var(--color-warm-white)',
+            borderTop: '1px solid rgba(184,151,90,0.18)',
+            borderBottom: '1px solid rgba(184,151,90,0.18)',
+          }}
+        >
+          <p
+            className="font-serif"
+            style={{
+              fontSize: 'clamp(1.05rem, 2.5vw, 1.35rem)',
+              color: 'var(--color-charcoal)',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              lineHeight: 1.8,
+              maxWidth: '700px',
+              margin: '0 auto',
+            }}
+          >
+            „Megszületni a világra gyönyörű,
+            <br />
+            Benne lenni a világban gyönyörű,
+            <br />
+            De kiszületni a világból az a szép,
+            <br />
+            Elhagyni a csónakot a tengerért!”
+          </p>
         </div>
       </div>
     </section>

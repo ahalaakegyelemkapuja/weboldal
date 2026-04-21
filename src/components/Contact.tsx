@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function Contact() {
-  const [form, setForm] = useState({ nev: '', email: '', telefon: '', uzenet: '' });
+  const [form, setForm] = useState({ nev: '', email: '', telefon: '', tema: 'Temetési szertartás', uzenet: '' });
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -16,7 +16,7 @@ export default function Contact() {
     border: '1px solid var(--color-stone-light)',
     borderRadius: '2px',
     fontFamily: 'var(--font-sans)',
-    fontSize: '0.9rem',
+    fontSize: '16px',
     color: 'var(--color-charcoal)',
     fontWeight: 300,
     outline: 'none',
@@ -26,12 +26,11 @@ export default function Contact() {
   return (
     <section
       id="kapcsolat"
-      className="py-24 px-6"
+      className="pt-24 pb-12 px-6"
       style={{ backgroundColor: 'var(--color-cream)' }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16">
-          {/* Left: Contact info */}
           <div>
             <p
               className="font-sans text-xs tracking-widest uppercase mb-4"
@@ -48,9 +47,7 @@ export default function Contact() {
                 lineHeight: 1.2,
               }}
             >
-              Vegye fel velem
-              <br />
-              <em style={{ fontStyle: 'italic', color: 'var(--color-sage-dark)' }}>a kapcsolatot</em>
+              Keressen bizalommal
             </h2>
 
             <div className="section-divider mb-8" style={{ margin: '0 0 2rem 0' }} />
@@ -61,48 +58,67 @@ export default function Contact() {
                 color: 'var(--color-stone-dark)',
                 fontWeight: 300,
                 lineHeight: 1.85,
-                maxWidth: '420px',
+                maxWidth: '480px',
               }}
             >
-              Ha szeretné, hogy segítsek méltó és személyes búcsút szervezni szerettének,
-              keressen bizalommal. Az első konzultáció kötelezettségmentes, és mindig az Önök
-              igényeihez és ütemtervéhez igazodom.
+              Ha megszólította mindaz, amit olvasott, keressen bizalommal.
             </p>
 
-            {/* Contact details */}
             <div className="space-y-6">
               {[
                 {
                   icon: '✆',
                   label: 'Telefon',
-                  value: '+36 30 123 4567',
-                  href: 'tel:+36301234567',
-                },
-                {
-                  icon: '✉',
-                  label: 'E-mail',
-                  value: 'aniko@kovacsbucsuztato.hu',
-                  href: 'mailto:aniko@kovacsbucsuztato.hu',
+                  value: '+36305066544',
+                  href: 'tel:+36305066544',
                 },
                 {
                   icon: '◎',
                   label: 'Helyszín',
-                  value: 'Budapest és környéke',
+                  value: 'Országosan elérhető',
                   href: null,
+                },
+                {
+                  icon: '✉︎',
+                  label: 'E-mail',
+                  value: 'kovacs.aniko.szertartasvezeto@gmail.com',
+                  href: 'mailto:kovacs.aniko.szertartasvezeto@gmail.com',
                 },
               ].map(item => (
                 <div key={item.label} className="flex items-start gap-4">
                   <div
-                    className="font-serif w-10 h-10 flex items-center justify-center flex-shrink-0"
+                    className={`font-serif w-10 h-10 flex items-center justify-center flex-shrink-0 contact-icon ${
+                      item.label === 'Telefon'
+                        ? 'contact-icon-phone'
+                        : item.label === 'Helyszín'
+                        ? 'contact-icon-location'
+                        : item.label === 'E-mail'
+                        ? 'contact-icon-email'
+                        : ''
+                    }`}
                     style={{
+                      fontFamily: 'system-ui, sans-serif',
+                      lineHeight: 1,
+                      textAlign: 'center',
                       backgroundColor: 'var(--color-warm-white)',
                       border: '1px solid var(--color-sage-light)',
                       color: 'var(--color-sage)',
                       borderRadius: '2px',
-                      fontSize: item.label === 'Telefon' ? '2rem' : '1rem',
                     }}
                   >
-                    {item.icon}
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                        lineHeight: 1,
+                        transform: item.label === 'E-mail' ? 'translateY(-0.16rem)' : undefined,
+                      }}
+                    >
+                      {item.icon}
+                    </span>
                   </div>
                   <div>
                     <p
@@ -130,10 +146,8 @@ export default function Contact() {
                 </div>
               ))}
             </div>
-
           </div>
 
-          {/* Right: Form */}
           <div>
             {sent ? (
               <div
@@ -155,8 +169,8 @@ export default function Contact() {
                   className="font-sans"
                   style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.8 }}
                 >
-                  Hamarosan felveszem Önnel a kapcsolatot. Addig is, ha sürgős a megkeresés,
-                  hívjon bizalommal telefonon.
+                  Hamarosan felveszem Önnel a kapcsolatot. Ha sürgős a megkeresés, hívjon bizalommal
+                  telefonon.
                 </p>
               </div>
             ) : (
@@ -179,14 +193,11 @@ export default function Contact() {
                   className="font-sans text-sm mb-6"
                   style={{ color: 'var(--color-stone)', fontWeight: 300 }}
                 >
-                  Az első megkeresés kötelezettségmentes.
+                  Ha megszólította mindaz, amit olvasott, keressen bizalommal.
                 </p>
 
                 <div>
-                  <label
-                    className="font-sans text-xs tracking-widest uppercase block mb-2"
-                    style={{ color: 'var(--color-stone)' }}
-                  >
+                  <label className="font-sans text-xs tracking-widest uppercase block mb-2" style={{ color: 'var(--color-stone)' }}>
                     Neve *
                   </label>
                   <input
@@ -196,17 +207,12 @@ export default function Contact() {
                     onChange={e => setForm({ ...form, nev: e.target.value })}
                     style={inputStyle}
                     placeholder="Teljes neve"
-                    onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-sage)')}
-                    onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-stone-light)')}
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label
-                      className="font-sans text-xs tracking-widest uppercase block mb-2"
-                      style={{ color: 'var(--color-stone)' }}
-                    >
+                    <label className="font-sans text-xs tracking-widest uppercase block mb-2" style={{ color: 'var(--color-stone)' }}>
                       E-mail *
                     </label>
                     <input
@@ -216,15 +222,10 @@ export default function Contact() {
                       onChange={e => setForm({ ...form, email: e.target.value })}
                       style={inputStyle}
                       placeholder="email@cim.hu"
-                      onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-sage)')}
-                      onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-stone-light)')}
                     />
                   </div>
                   <div>
-                    <label
-                      className="font-sans text-xs tracking-widest uppercase block mb-2"
-                      style={{ color: 'var(--color-stone)' }}
-                    >
+                    <label className="font-sans text-xs tracking-widest uppercase block mb-2" style={{ color: 'var(--color-stone)' }}>
                       Telefon
                     </label>
                     <input
@@ -233,17 +234,27 @@ export default function Contact() {
                       onChange={e => setForm({ ...form, telefon: e.target.value })}
                       style={inputStyle}
                       placeholder="+36 ..."
-                      onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-sage)')}
-                      onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-stone-light)')}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    className="font-sans text-xs tracking-widest uppercase block mb-2"
-                    style={{ color: 'var(--color-stone)' }}
+                  <label className="font-sans text-xs tracking-widest uppercase block mb-2" style={{ color: 'var(--color-stone)' }}>
+                    Téma *
+                  </label>
+                  <select
+                    value={form.tema}
+                    onChange={e => setForm({ ...form, tema: e.target.value })}
+                    style={inputStyle}
                   >
+                    <option>Temetési szertartás</option>
+                    <option>Gyásztanácsadás</option>
+                    <option>Egyéb</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-sans text-xs tracking-widest uppercase block mb-2" style={{ color: 'var(--color-stone)' }}>
                     Üzenet *
                   </label>
                   <textarea
@@ -252,9 +263,7 @@ export default function Contact() {
                     value={form.uzenet}
                     onChange={e => setForm({ ...form, uzenet: e.target.value })}
                     style={{ ...inputStyle, resize: 'vertical' }}
-                    placeholder="Írjon néhány sort a szertartásról, az időpontról, vagy bármiről, amiben segítséget kér..."
-                    onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-sage)')}
-                    onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-stone-light)')}
+                    placeholder="Írjon néhány sort a megkeresésről..."
                   />
                 </div>
 
@@ -276,10 +285,7 @@ export default function Contact() {
                   Üzenet küldése
                 </button>
 
-                <p
-                  className="font-sans text-xs text-center"
-                  style={{ color: 'var(--color-stone)', fontWeight: 300 }}
-                >
+                <p className="font-sans text-xs text-center" style={{ color: 'var(--color-stone)', fontWeight: 300 }}>
                   Adatait bizalmasan kezelem.
                 </p>
               </form>

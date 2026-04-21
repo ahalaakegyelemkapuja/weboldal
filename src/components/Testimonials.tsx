@@ -1,33 +1,81 @@
+import { useEffect, useMemo, useState } from 'react';
+
 const testimonials = [
-  {
-    text: 'Anikó rendkívüli érzékenységgel hallgatta meg az emlékeinket édesapánkról. A búcsúbeszéd pontosan azt fejezte ki, amit mi magunk soha nem tudtunk volna szavakba önteni. Hálásak vagyunk, hogy volt, aki levette ezt a terhet a vállunkról.',
-    name: 'Molnár Erzsébet',
-    relation: 'elhunyt édesapja nevében',
-  },
-  {
-    text: 'Nem tudtam elképzelni, hogyan mondunk búcsút anyukámnak vallási szertartás nélkül. Anikó megmutatta, hogy a személyes szavak, az emlékek és a szeretet maga is lehet szertartás. Gyönyörű volt.',
-    name: 'Varga Péter',
-    relation: 'elhunyt édesanyja nevében',
-  },
-  {
-    text: 'A konzultáció során olyan biztonságban éreztük magunkat, hogy szinte mindent elmeséltünk. A búcsúbeszéd tükrözte azt az embert, akit mi ismertünk és szerettünk — nem egy sablont, hanem őt magát.',
-    name: 'Kovács Judit',
-    relation: 'elhunyt férje nevében',
-  },
+  '„Nagyon köszönöm Anikó a mai munkáját. Pont így képzeltem el, nagyon szépen beszélt.”',
+  '„Kedves Anikó! Szeretnénk megköszönni a szép beszédet és a szertartásvezetést. Utólag a család minden tagjával azt beszéltük, hogy mennyire megérintett mindenkit, hogy ennyire szívhez szólóan vezette a búcsúztatót. Az Ön kedves, nyugodt, lágy hangja nagyon hozzájárult ahhoz, hogy méltón búcsúzzunk Édesapámtól. A beszéd minden pillanatában érezhető volt az Ön figyelmessége, gondossága. Hálásak vagyunk.”',
+  '„Nagyon köszönöm a közreműködését Szüleim hamvainak elhelyezésénél. Örülök, hogy megismerkedhettem Önnel, és segített nekem, nekünk ennek a nagyon nehéz eseménynek a méltó lebonyolításában.”',
+  '„Igazán ritka felemelő beszéd és szertartás volt.”',
+  '„Kedves Anikó! Szeretném megköszönni az anyukám temetésén tartott beszédet! Nagyon megindító és hozzá illő volt. Bárkivel beszéltem, külön kiemelte Önt, de nem volt rá szükség, tisztában voltam vele, mennyivel és mennyire hozzájárult a temetés méltó lebonyolításához. Nagyon hálás vagyok!”',
+  '„The ceremony was beautifully done.”',
+  '„Kedves Anikó! Szeretném még egyszer megköszönni, hogy segített igazán széppé és meghitté tenni a mai napot mindannyiunk számára. Tökéletes volt a búcsú szövege és gyönyörű volt, ahogy elmondta - több vendég is külön kiemelte ezt az elköszönésnél.”',
+  '„Kedves Anikó! Csodálatos, amit írt. Köszönjük szépen, mindenkinek tetszett. A búcsúztató szöveg az idézetekkel tökéletes.”',
 ];
 
+const DESKTOP_BREAKPOINT = 1100;
+const SCROLL_DURATION = 60; // seconds
+const SECOND_LIST_START = 4; // start from "Kedves Anikó! Szeretném megköszönni az anyukám temetésén..."
+const LIST_COPIES = 3;
+
+function duplicateList(items: string[]) {
+  return Array.from({ length: LIST_COPIES }, () => items).flat();
+}
+
 export default function Testimonials() {
+  const [isWide, setIsWide] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    return window.innerWidth >= DESKTOP_BREAKPOINT;
+  });
+  const [pauseCount, setPauseCount] = useState(0);
+  const isPaused = pauseCount > 0;
+
+  const beginInteraction = () => {
+    setPauseCount((value) => value + 1);
+  };
+
+  const endInteraction = () => {
+    setPauseCount((value) => Math.max(0, value - 1));
+  };
+
+  const columnTestimonials = useMemo(() => {
+    const firstPass = testimonials;
+    const secondPass = [
+      ...testimonials.slice(SECOND_LIST_START),
+      ...testimonials.slice(0, SECOND_LIST_START),
+    ];
+
+    return isWide
+      ? [
+          duplicateList(firstPass),
+          duplicateList(secondPass),
+        ]
+      : [duplicateList(firstPass)];
+  }, [isWide]);
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setIsWide(window.innerWidth >= DESKTOP_BREAKPOINT);
+    };
+
+    updateLayout();
+    window.addEventListener('resize', updateLayout);
+
+    return () => window.removeEventListener('resize', updateLayout);
+  }, []);
+
   return (
     <section
-      className="py-24 px-6"
+      id="visszajelzesek"
+      className="py-13 px-6"
       style={{ backgroundColor: 'var(--color-warm-white)' }}
     >
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <p
             className="font-sans text-xs tracking-widest uppercase mb-4"
-            style={{ color: 'var(--color-sage)', transform: 'translateY(-30px)' }}
+            style={{ color: 'var(--color-sage)' }}
           >
             Visszajelzések
           </p>
@@ -38,68 +86,79 @@ export default function Testimonials() {
               color: 'var(--color-charcoal)',
               fontWeight: 300,
               lineHeight: 1.2,
-              transform: 'translateY(-20px)',
             }}
           >
-            Amit a családok mondanak
+            Akik már megtiszteltek bizalmukkal
           </h2>
-          <div className="section-divider mt-6" style={{ transform: 'translateY(10px)' }} />
+          <div className="section-divider" style={{ margin: '1.3rem auto 1.5rem' }} />
         </div>
 
-        {/* Testimonial cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
+        <div
+          className="grid gap-6"
+          style={{
+            gridTemplateColumns: isWide ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)',
+            alignItems: 'start',
+          }}
+        >
+          {columnTestimonials.map((column, columnIndex) => (
             <div
-              key={i}
-              className="p-8 relative"
+              key={columnIndex}
+              className="testimonials-viewport hide-scrollbar"
               style={{
-                backgroundColor: 'var(--color-cream)',
-                borderRadius: '2px',
-                border: '1px solid rgba(184, 151, 90, 0.1)',
+                height: isWide ? '34rem' : '32rem',
+                overflow: 'hidden',
               }}
+              onTouchStart={beginInteraction}
+              onTouchEnd={endInteraction}
+              onTouchCancel={endInteraction}
             >
-              {/* Quote mark */}
               <div
-                className="font-serif absolute top-4 left-6"
+                className="testimonial-scroll-list"
                 style={{
-                  fontSize: '4rem',
-                  color: 'var(--color-sage-light)',
-                  lineHeight: 1,
-                  opacity: 0.6,
+                  animation: `scrollUp ${SCROLL_DURATION}s linear infinite`,
+                  animationPlayState: isPaused ? 'paused' : 'running',
                 }}
               >
-                „
-              </div>
+                <div className="flex flex-col gap-5 px-1 py-5 md:px-2">
+                  {column.map((text, index) => (
+                    <article
+                      key={`${columnIndex}-${index}`}
+                      className="relative rounded-sm px-6 py-6"
+                      style={{
+                        backgroundColor: 'var(--color-cream)',
+                        border: '1px solid rgba(184, 151, 90, 0.1)',
+                        minHeight: 'fit-content',
+                      }}
+                    >
+                      <p
+                        className="font-sans"
+                        style={{
+                          color: 'var(--color-stone-dark)',
+                          fontWeight: 300,
+                          lineHeight: 1.85,
+                          fontSize: '0.95rem',
+                          fontStyle: 'italic',
+                          margin: 0,
+                          paddingRight: '2rem',
+                        }}
+                      >
+                        {text}
+                      </p>
 
-              <p
-                className="font-sans mt-8 mb-6"
-                style={{
-                  color: 'var(--color-stone-dark)',
-                  fontWeight: 300,
-                  lineHeight: 1.85,
-                  fontSize: '0.92rem',
-                  fontStyle: 'italic',
-                }}
-              >
-                {t.text}
-              </p>
-
-              <div
-                className="pt-4"
-                style={{ borderTop: '1px solid var(--color-stone-light)' }}
-              >
-                <p
-                  className="font-sans text-sm"
-                  style={{ color: 'var(--color-charcoal)', fontWeight: 500 }}
-                >
-                  {t.name}
-                </p>
-                <p
-                  className="font-sans text-xs tracking-wide mt-1"
-                  style={{ color: 'var(--color-stone)', fontWeight: 300 }}
-                >
-                  {t.relation}
-                </p>
+                      <div
+                        className="font-serif absolute bottom-3 right-4"
+                        style={{
+                          fontSize: '3.25rem',
+                          color: 'var(--color-sage-light)',
+                          lineHeight: 1,
+                          opacity: 0.3,
+                        }}
+                      >
+                        „
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
