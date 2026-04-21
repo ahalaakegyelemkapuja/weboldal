@@ -99,10 +99,14 @@ body {
   transform: translateY(28px) scale(1.01);
 }
 
-.app-shell-revealing,
-.app-shell-visible {
+.app-shell-revealing {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+.app-shell-visible {
+  opacity: 1;
+  transform: none;
 }
 
 .site-loader {
@@ -113,7 +117,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: white;
+  background: linear-gradient(180deg, rgb(35, 33, 29) 0%, rgb(40, 37, 33) 100%);
   box-shadow: 0 22px 70px rgba(58, 53, 48, 0.12);
   transform: translateY(0);
   transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
@@ -128,6 +132,7 @@ body {
   width: clamp(26px, 2.7vw, 34px);
   height: auto;
   opacity: 0;
+  filter: invert(1);
   transform: translateY(6px) scale(0.88);
   animation: loaderLogoIn 0.32s ease-out 0.08s forwards;
 }
