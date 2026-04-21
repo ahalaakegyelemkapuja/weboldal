@@ -1,6 +1,8 @@
-export function getNormalizedPath(pathname = window.location.pathname, hash = window.location.hash) {
-  if (typeof hash === 'string' && hash.startsWith('#/')) {
-    return hash.slice(1).replace(/\/+$/, '') || '/';
+export function getNormalizedPath(pathname = window.location.pathname, hash?: string) {
+  const resolvedHash = hash ?? (pathname === window.location.pathname ? window.location.hash : '');
+
+  if (typeof resolvedHash === 'string' && resolvedHash.startsWith('#/')) {
+    return resolvedHash.slice(1).replace(/\/+$/, '') || '/';
   }
 
   return pathname.replace(/\/+$/, '') || '/';

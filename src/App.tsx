@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Hero from './components/Hero';
 import About from './components/About';
 import Process from './components/Process';
@@ -15,6 +15,10 @@ const LOADER_HOLD_MS = 500;
 const LOADER_EXIT_MS = 620;
 
 type LoaderPhase = 'visible' | 'revealing' | 'hidden';
+
+function isPageRoute(path: string) {
+  return path === '/' || path === '/eskuvo';
+}
 
 function MainSite() {
   return (
@@ -35,9 +39,43 @@ function MainSite() {
 export default function App() {
   const [normalizedPath, setNormalizedPath] = useState(() => getNormalizedPath());
   const [loaderPhase, setLoaderPhase] = useState<LoaderPhase>('visible');
+  const previousPathRef = useRef(normalizedPath);
+  const loaderTimersRef = useRef<number[]>([]);
+
+  const clearLoaderTimers = () => {
+    loaderTimersRef.current.forEach(timerId => {
+      window.clearTimeout(timerId);
+    });
+    loaderTimersRef.current = [];
+  };
+
+  const startLoaderCycle = () => {
+    clearLoaderTimers();
+    setLoaderPhase('visible');
+
+    const revealTimer = window.setTimeout(() => {
+      setLoaderPhase('revealing');
+    }, LOADER_HOLD_MS);
+
+    const hideTimer = window.setTimeout(() => {
+      setLoaderPhase('hidden');
+    }, LOADER_HOLD_MS + LOADER_EXIT_MS);
+
+    loaderTimersRef.current = [revealTimer, hideTimer];
+  };
 
   useEffect(() => {
-    const handleRouteChange = () => setNormalizedPath(getNormalizedPath());
+    const handleRouteChange = () => {
+      const nextPath = getNormalizedPath();
+      const previousPath = previousPathRef.current;
+
+      if (nextPath !== previousPath && isPageRoute(previousPath) && isPageRoute(nextPath)) {
+        startLoaderCycle();
+      }
+
+      previousPathRef.current = nextPath;
+      setNormalizedPath(nextPath);
+    };
 
     window.addEventListener('popstate', handleRouteChange);
 
@@ -47,17 +85,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const revealTimer = window.setTimeout(() => {
-      setLoaderPhase('revealing');
-    }, LOADER_HOLD_MS);
-
-    const hideTimer = window.setTimeout(() => {
-      setLoaderPhase('hidden');
-    }, LOADER_HOLD_MS + LOADER_EXIT_MS);
+    startLoaderCycle();
 
     return () => {
-      window.clearTimeout(revealTimer);
-      window.clearTimeout(hideTimer);
+      clearLoaderTimers();
     };
   }, []);
 
