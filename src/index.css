@@ -88,6 +88,8 @@ body {
   font-weight: 400;
   background-color: rgba(255, 255, 255, 0.04);
   background-clip: padding-box;
+  backdrop-filter: blur(10px) saturate(110%);
+  -webkit-backdrop-filter: blur(10px) saturate(110%);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -95,11 +97,6 @@ body {
 .hero-glass-button:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px rgba(58, 53, 48, 0.08);
-}
-
-.hero-glass-button-ready {
-  backdrop-filter: blur(10px) saturate(110%);
-  -webkit-backdrop-filter: blur(10px) saturate(110%);
 }
 
 .hero-glass-button-label {
