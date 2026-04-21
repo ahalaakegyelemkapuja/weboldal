@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { MouseEvent } from 'react';
-import { getNormalizedPath, isRouteHref, navigateToPath } from '../navigation.ts';
+import { getNormalizedPath, getRouteHref, isRouteHref, navigateToPath } from '../navigation.ts';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -63,7 +63,7 @@ export default function Navbar() {
       }}
     >
       <div className="relative max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
-        <a href={isWeddingPage ? '/eskuvo' : '/'} className="flex items-center gap-3 leading-none min-w-0" onClick={handleLinkClick(isWeddingPage ? '/eskuvo' : '/')}>
+        <a href={getRouteHref(isWeddingPage ? '/eskuvo' : '/')} className="flex items-center gap-3 leading-none min-w-0" onClick={handleLinkClick(isWeddingPage ? '/eskuvo' : '/')}>
           <img
             src="/logos/aniko-logo.svg"
             alt="Kovács Anikó"
@@ -110,7 +110,7 @@ export default function Navbar() {
           {links.map(link => (
             <a
               key={link.href}
-              href={link.href}
+              href={getRouteHref(link.href)}
               className="font-sans text-sm tracking-wide transition-colors duration-200"
               style={{ color: navLinkColor, fontWeight: 300, textShadow: topTextShadow }}
               onClick={handleLinkClick(link.href)}
@@ -177,7 +177,7 @@ export default function Navbar() {
           {links.map(link => (
             <a
               key={link.href}
-              href={link.href}
+              href={getRouteHref(link.href)}
               className="font-sans text-sm py-2 border-b"
               style={{
                 color: scrolled ? 'var(--color-charcoal)' : 'white',

@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { getNormalizedPath, isRouteHref, navigateToPath } from '../navigation.ts';
+import { getNormalizedPath, getRouteHref, isRouteHref, navigateToPath } from '../navigation.ts';
 
 export default function Footer() {
   const isWeddingPage = getNormalizedPath() === '/eskuvo';
@@ -84,7 +84,7 @@ export default function Footer() {
               {navLinks.map(link => (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={getRouteHref(link.href)}
                   className="block font-sans text-sm transition-colors duration-200"
                   style={{ color: 'var(--color-stone-light)', fontWeight: 300 }}
                   onClick={handleLinkClick(link.href)}
