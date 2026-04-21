@@ -764,7 +764,7 @@ export default function WeddingPage() {
                     onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
                     onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
                   >
-                    {isSubmitting ? 'Kuldes...' : 'Üzenet küldése'}
+                    {isSubmitting ? 'Küldés...' : 'Üzenet küldése'}
                   </button>
 
                   {submitError ? (

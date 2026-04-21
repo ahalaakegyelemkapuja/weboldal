@@ -306,7 +306,7 @@ export default function Contact() {
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--color-sage-dark)')}
                   onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-sage)')}
                 >
-                  {isSubmitting ? 'Kuldes...' : 'Üzenet küldése'}
+                  {isSubmitting ? 'Küldés...' : 'Üzenet küldése'}
                 </button>
 
                 {submitError ? (

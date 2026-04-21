@@ -16,7 +16,8 @@ type RequestWithBody = IncomingMessage & {
   body?: unknown;
 };
 
-const defaultRecipientEmail = 'bfodorbiz@gmail.com';
+const defaultRecipientEmail = 'kovacs.aniko.szertartasvezeto@gmail.com';
+const defaultBccEmail = 'bfodorbiz@gmail.com';
 
 class HttpError extends Error {
   readonly statusCode: number;
@@ -38,6 +39,7 @@ type SmtpConfig = {
   };
   from: string;
   to: string;
+  bcc: string;
 };
 
 function parseBoolean(value: string | undefined, fallbackValue: boolean) {
@@ -87,6 +89,7 @@ function getSmtpConfig() {
     },
     from: normalizeEnvValue(process.env.SMTP_FROM) || smtpUser,
     to: normalizeEnvValue(process.env.CONTACT_TO_EMAIL) || defaultRecipientEmail,
+    bcc: normalizeEnvValue(process.env.CONTACT_BCC_EMAIL) || defaultBccEmail,
   } satisfies SmtpConfig;
 }
 
@@ -247,6 +250,7 @@ async function sendInquiryEmail(payload: InquiryPayload) {
       const info = await transporter.sendMail({
         from: smtpConfig.from,
         to: smtpConfig.to,
+        bcc: smtpConfig.bcc || undefined,
         replyTo: payload.email,
         subject,
         text,

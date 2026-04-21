@@ -15,6 +15,7 @@ Required environment variables:
 - `SMTP_PASS`
 - `SMTP_FROM`
 - `CONTACT_TO_EMAIL`
+- `CONTACT_BCC_EMAIL`
 
 For Gmail SMTP, use an app password instead of your normal Gmail password.
 
