@@ -36,9 +36,21 @@ const weddingProcess = [
 ];
 
 const defaultWeddingVideoUrl = 'https://drive.google.com/file/d/10N_-OyC7JJJlqUwvaCcOSAoj_RkeqX0p/view';
+const googleDriveFileIdPattern = /drive\.google\.com\/file\/d\/([^/?]+)/;
 
 function getWeddingVideoUrl(src: string) {
   return src.replace('/preview', '/view');
+}
+
+function getWeddingVideoEmbedUrl(src: string) {
+  const trimmedSrc = src.trim();
+  const googleDriveMatch = trimmedSrc.match(googleDriveFileIdPattern);
+
+  if (googleDriveMatch?.[1]) {
+    return `https://drive.google.com/file/d/${googleDriveMatch[1]}/preview`;
+  }
+
+  return trimmedSrc.includes('/preview') ? trimmedSrc : '';
 }
 
 export default function WeddingPage() {
@@ -71,7 +83,9 @@ export default function WeddingPage() {
     }
   };
 
-  const weddingVideoUrl = getWeddingVideoUrl(import.meta.env.VITE_WEDDING_VIDEO_URL?.trim() || defaultWeddingVideoUrl);
+  const weddingVideoSource = import.meta.env.VITE_WEDDING_VIDEO_URL?.trim() || defaultWeddingVideoUrl;
+  const weddingVideoUrl = getWeddingVideoUrl(weddingVideoSource);
+  const weddingVideoEmbedUrl = getWeddingVideoEmbedUrl(weddingVideoSource);
 
   const inputStyle = {
     width: '100%',
@@ -377,45 +391,98 @@ export default function WeddingPage() {
               boxShadow: '0 18px 50px rgba(58,53,48,0.08)',
             }}
           >
-            <div
-              className="flex w-full items-center justify-center text-center"
-              style={{
-                minHeight: 'min(56.25vw, 32rem)',
-                borderRadius: '2px',
-                background:
-                  'linear-gradient(180deg, rgba(250, 247, 242, 0.42) 0%, rgba(244, 235, 228, 0.92) 100%)',
-                padding: '2rem',
-              }}
-            >
-              <div style={{ maxWidth: '34rem' }}>
-                <p
-                  className="font-sans"
-                  style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.85, margin: 0 }}
-                >
-                  A Google Drive ezt a videót nem engedi közvetlenül beágyazni, ezért külön lapon nyílik meg.
-                </p>
-                <a
-                  href={weddingVideoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center font-sans text-sm tracking-widest uppercase transition-all duration-300"
+            {weddingVideoEmbedUrl ? (
+              <>
+                <div
                   style={{
-                    marginTop: '1.5rem',
-                    minHeight: '3.25rem',
-                    padding: '0 1.5rem',
-                    backgroundColor: 'var(--color-dusty-rose)',
-                    color: 'white',
+                    position: 'relative',
+                    width: '100%',
+                    paddingTop: '56.25%',
                     borderRadius: '2px',
-                    letterSpacing: '0.12em',
-                    fontWeight: 400,
+                    overflow: 'hidden',
+                    backgroundColor: 'rgba(58,53,48,0.08)',
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
                 >
-                  Videó megnyitása
-                </a>
+                  <iframe
+                    src={weddingVideoEmbedUrl}
+                    title="Esküvői szertartás videó"
+                    loading="lazy"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 0,
+                    }}
+                  />
+                </div>
+
+                <div className="mt-4 flex justify-center sm:justify-end">
+                  <a
+                    href={weddingVideoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center font-sans text-sm tracking-widest uppercase transition-all duration-300"
+                    style={{
+                      minHeight: '3.25rem',
+                      padding: '0 1.5rem',
+                      backgroundColor: 'var(--color-dusty-rose)',
+                      color: 'white',
+                      borderRadius: '2px',
+                      letterSpacing: '0.12em',
+                      fontWeight: 400,
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
+                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
+                  >
+                    Megnyitás új lapon
+                  </a>
+                </div>
+              </>
+            ) : (
+              <div
+                className="flex w-full items-center justify-center text-center"
+                style={{
+                  minHeight: 'min(56.25vw, 32rem)',
+                  borderRadius: '2px',
+                  background:
+                    'linear-gradient(180deg, rgba(250, 247, 242, 0.42) 0%, rgba(244, 235, 228, 0.92) 100%)',
+                  padding: '2rem',
+                }}
+              >
+                <div style={{ maxWidth: '34rem' }}>
+                  <p
+                    className="font-sans"
+                    style={{ color: 'var(--color-stone-dark)', fontWeight: 300, lineHeight: 1.85, margin: 0 }}
+                  >
+                    A videó külön lapon nyitható meg.
+                  </p>
+                  <a
+                    href={weddingVideoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center font-sans text-sm tracking-widest uppercase transition-all duration-300"
+                    style={{
+                      marginTop: '1.5rem',
+                      minHeight: '3.25rem',
+                      padding: '0 1.5rem',
+                      backgroundColor: 'var(--color-dusty-rose)',
+                      color: 'white',
+                      borderRadius: '2px',
+                      letterSpacing: '0.12em',
+                      fontWeight: 400,
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
+                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
+                  >
+                    Videó megnyitása
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
