@@ -59,6 +59,7 @@ export default function WeddingPage() {
   const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [embedFailed, setEmbedFailed] = useState(false);
   const draftLinks = buildInquiryDraftLinks(form, 'wedding');
 
   const handleSubmit = async (e: FormEvent) => {
@@ -86,6 +87,7 @@ export default function WeddingPage() {
   const weddingVideoSource = import.meta.env.VITE_WEDDING_VIDEO_URL?.trim() || defaultWeddingVideoUrl;
   const weddingVideoUrl = getWeddingVideoUrl(weddingVideoSource);
   const weddingVideoEmbedUrl = getWeddingVideoEmbedUrl(weddingVideoSource);
+  const shouldShowEmbed = !!weddingVideoEmbedUrl && !embedFailed;
 
   const inputStyle = {
     width: '100%',
@@ -391,57 +393,34 @@ export default function WeddingPage() {
               boxShadow: '0 18px 50px rgba(58,53,48,0.08)',
             }}
           >
-            {weddingVideoEmbedUrl ? (
-              <>
-                <div
+            {shouldShowEmbed ? (
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  paddingTop: '56.25%',
+                  borderRadius: '2px',
+                  overflow: 'hidden',
+                  backgroundColor: 'rgba(58,53,48,0.08)',
+                }}
+              >
+                <iframe
+                  src={weddingVideoEmbedUrl}
+                  title="Esküvői szertartás videó"
+                  loading="lazy"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  onError={() => setEmbedFailed(true)}
                   style={{
-                    position: 'relative',
+                    position: 'absolute',
+                    inset: 0,
                     width: '100%',
-                    paddingTop: '56.25%',
-                    borderRadius: '2px',
-                    overflow: 'hidden',
-                    backgroundColor: 'rgba(58,53,48,0.08)',
+                    height: '100%',
+                    border: 0,
                   }}
-                >
-                  <iframe
-                    src={weddingVideoEmbedUrl}
-                    title="Esküvői szertartás videó"
-                    loading="lazy"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
-                      border: 0,
-                    }}
-                  />
-                </div>
-
-                <div className="mt-4 flex justify-center sm:justify-end">
-                  <a
-                    href={weddingVideoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center font-sans text-sm tracking-widest uppercase transition-all duration-300"
-                    style={{
-                      minHeight: '3.25rem',
-                      padding: '0 1.5rem',
-                      backgroundColor: 'var(--color-dusty-rose)',
-                      color: 'white',
-                      borderRadius: '2px',
-                      letterSpacing: '0.12em',
-                      fontWeight: 400,
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#ad8580')}
-                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-dusty-rose)')}
-                  >
-                    Megnyitás új lapon
-                  </a>
-                </div>
-              </>
+                />
+              </div>
             ) : (
               <div
                 className="flex w-full items-center justify-center text-center"
